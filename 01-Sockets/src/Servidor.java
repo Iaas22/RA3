@@ -12,17 +12,17 @@ public class Servidor {
 
     public void connecta() throws IOException {
         srvSocket = new ServerSocket(PORT);
-        System.out.println("Servidor escoltant a " + HOST + ":" + PORT);
+        System.out.println("Servidor en marxa a " + HOST + ":" + PORT);
+        System.out.println("Esperant connexions a " + HOST + ":" + PORT);
         clientSocket = srvSocket.accept();
-        System.out.println("Client connectat");
+        System.out.println("Client connectat: " + clientSocket.getInetAddress());
     }
 
     public void repDades() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String linia;
-        System.out.println("Dades rebudes del client:");
         while ((linia = reader.readLine()) != null) {
-            System.out.println(linia);
+            System.out.println("Rebut: " + linia);
         }
         reader.close();
     }
@@ -54,6 +54,7 @@ public class Servidor {
             System.err.println("Error al servidor: " + e.getMessage());
         } finally {
             servidor.tanca();
+            System.out.println("Servidor tancat.");
         }
     }
 }
