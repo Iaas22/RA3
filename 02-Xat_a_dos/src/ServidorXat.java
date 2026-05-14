@@ -39,7 +39,11 @@ public class ServidorXat {
             System.out.println("Client connectat: " + srv.clientSocket.getRemoteSocketAddress());
 
             srv.oos = new ObjectOutputStream(srv.clientSocket.getOutputStream());
+            srv.oos.flush();
             srv.ois = new ObjectInputStream(srv.clientSocket.getInputStream());
+
+            srv.oos.writeObject("Escriu el teu nom:");
+            srv.oos.flush();
 
             String nom = srv.getNom();
             System.out.println("Nom rebut: " + nom);
@@ -62,7 +66,6 @@ public class ServidorXat {
 
             try { srv.clientSocket.close(); } catch (Exception e) {}
             srv.pararServidor();
-            System.out.println("Servidor aturat.");
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }

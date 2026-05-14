@@ -20,15 +20,20 @@ public class FilServidorXat implements Runnable {
             while ((obj = ois.readObject()) != null) {
                 if (!(obj instanceof String)) continue;
                 String msg = (String) obj;
-                System.out.println("Missatge ('" + ServidorXat.MSG_SORTIR + "' per tancar): Rebut: " + msg);
+                System.out.println("Missatge ('sortir' per tancar): Rebut: " + msg);
                 if (ServidorXat.MSG_SORTIR.equals(msg)) {
                     System.out.println("Fil de xat finalitzat.");
                     break;
                 }
                 if ("Hola servidor!".equals(msg)) {
-                    System.out.println("Hola " + nom + "!");
+                    String resposta = "Hola " + nom + "!";
+                    System.out.println(resposta);
+                    oos.writeObject(resposta);
+                    oos.flush();
                 } else if ("Adeu".equals(msg)) {
                     System.out.println("Adeu");
+                    oos.writeObject("Adeu");
+                    oos.flush();
                 }
             }
         } catch (Exception e) {
